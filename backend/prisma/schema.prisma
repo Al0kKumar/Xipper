@@ -15,6 +15,7 @@ datasource db {
 
 model User {
   id       String    @id @default(uuid())
+  name     String
   email    String    @unique
   password String
   bookings Booking[]
@@ -22,7 +23,7 @@ model User {
 
 model Hotel {
   id       String    @id @default(uuid())
-  name     String
+  name     String    
   location String
   rooms    Int
   bookings Booking[]
