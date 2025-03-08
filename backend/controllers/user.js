@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 const prisma = new PrismaClient();
 
 const registerSchema = z.object({
-  name: z.string(),
   email: z.string().email("Invalid email format"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
@@ -29,13 +28,12 @@ export const registerUser = async (req, res) => {
 
     const newUser = await prisma.user.create({
       data: {
-        name : data.name,
         email: data.email,
         password: hashedPassword,
       },
     });
 
-    res.json({ id: newUser.id,name : newUser.name, email: newUser.email });
+    res.json({ id: newUser.id, email: newUser.email });
 
   } catch (error) {
     console.error(error);

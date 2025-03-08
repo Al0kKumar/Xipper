@@ -4,7 +4,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import hotelRoutes from './routes/hotelRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
-import checkInRoutes from './routes/checkinRoutes.js';
+import checkinRoutes from './routes/checkinRoutes.js';
 import addhotelRoutes from  './routes/addhotelRoutes.js'
 
 dotenv.config();
@@ -17,11 +17,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/hotels', hotelRoutes);
 app.use('/api/add', addhotelRoutes)
 app.use('/api/bookings', bookingRoutes);
-app.use('/api/checkins', checkInRoutes);
+app.use('/api/check', checkinRoutes);
 
-app.get('/', (req, res) => {
-  res.send('API is working 🚀');
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -5,9 +5,8 @@ const prisma = new PrismaClient();
 export const bookHotel = async (req, res) => {
   try {
     const { hotelName } = req.body;
-    const userId = req.userId; // Extracted from token by authMiddleware
-
-    // Validate required fields
+    const userId = req.userId; 
+    
     if (!hotelName) {
       return res.status(400).json({ error: 'Hotel name is required' });
     }
@@ -19,7 +18,6 @@ export const bookHotel = async (req, res) => {
       },
     });
 
-    // If the hotel is not found, return an error
     if (!hotel) {
       return res.status(404).json({ error: 'Hotel not found' });
     }
@@ -29,7 +27,6 @@ export const bookHotel = async (req, res) => {
       data: {
         userId, // Extracted from token
         hotelId: hotel.id, // Link to the found hotel
-        checkin: true, // Assuming default check-in status
       },
     });
 
