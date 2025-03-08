@@ -11,7 +11,6 @@ export const bookHotel = async (req, res) => {
       return res.status(400).json({ error: 'Hotel name is required' });
     }
 
-    // Find the hotel by name
     const hotel = await prisma.hotel.findFirst({
       where: {
         name: hotelName,
@@ -22,11 +21,10 @@ export const bookHotel = async (req, res) => {
       return res.status(404).json({ error: 'Hotel not found' });
     }
 
-    // Create a booking
     const booking = await prisma.booking.create({
       data: {
-        userId, // Extracted from token
-        hotelId: hotel.id, // Link to the found hotel
+        userId, 
+        hotelId: hotel.id, 
       },
     });
 

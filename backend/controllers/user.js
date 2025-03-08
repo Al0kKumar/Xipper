@@ -50,33 +50,26 @@ const loginSchema = z.object({
 
 export const loginUser = async (req, res) => {
   try {
-    // Validate request body
     const result = loginSchema.safeParse(req.body);
     
-    // If validation fails, return error response
     if (!result.success) {
       return res.status(400).json({ error: result.error.errors });
     }
 
-    // Extract validated data
     const data = result.data;
 
-    // Check if user exists in the database
     const user = await prisma.user.findUnique({ where: { email: data.email } });
     if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Compare passwords
     const validPassword = await bcrypt.compare(data.password, user.password);
     if (!validPassword) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Generate JWT token
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // Return token
     res.json({ token });
 
   } catch (error) {
